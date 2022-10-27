@@ -1,0 +1,15 @@
+name: HomePlugin
+author: Fllip
+version: 1.0
+api-version: 1.19
+main: de.fllip.home.spigot.HomePlugin
+
+commands:
+  homes:
+    permission: home.command.homes
+  home:
+    permission: home.command.home
+  sethome:
+    permission: home.command.sethome
+  delhome:
+    permission: home.command.delhome
