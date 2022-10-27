@@ -20,7 +20,7 @@ public class HomeCommand extends PlayerCommandExecutor {
 
     private final HomeAPI homeAPI;
 
-    MessageConfig messageConfig;
+    private final MessageConfig messageConfig;
 
     public HomeCommand(HomeAPI homeAPI, MessageConfig messageConfig) {
         super(messageConfig);

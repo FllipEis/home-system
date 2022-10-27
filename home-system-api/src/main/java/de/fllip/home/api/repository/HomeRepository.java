@@ -30,17 +30,17 @@ public interface HomeRepository {
     CompletableFuture<Home> findHomeByHomeNameAndOwnerId(String homeName, UUID ownerId);
 
     /**
-     * Finds all {@link Home}s by a specific owner
+     * Finds all {@link Home Homes} by a specific owner
      *
      * @param ownerId the id of the owner
-     * @return {@link CompletableFuture} with a list of {@link Home}s filtered by the owner id
+     * @return {@link CompletableFuture} with a list of {@link Home Homes} filtered by the owner's id
      */
     CompletableFuture<List<Home>> findAllHomesByOwnerId(UUID ownerId);
 
     /**
      * Saves a specific home
      *
-     * @param home the Home to be saved
+     * @param home the home to be saved
      * @return {@link CompletableFuture} when the home was saved or throws an exception, when the home cannot be saved
      */
     CompletableFuture<Void> saveHome(Home home);
@@ -51,15 +51,15 @@ public interface HomeRepository {
      *
      * @param homeName the name of the home, that will be deleted
      * @param ownerId the id of the owner
-     * @return CompletableFuture when the home was deleted or throws an exception, when the home cannot be deleted
+     * @return {@link CompletableFuture} when the home was deleted or throws an exception, when the home cannot be deleted
      */
     CompletableFuture<Void> deleteHomeByNameAndOwnerId(String homeName, UUID ownerId);
 
     /**
-     * Deletes all {@link Home}s by an owner id
+     * Deletes all {@link Home Homes} by an owner id
      *
      * @param ownerId the id of the owner
-     * @return CompletableFuture when the homes were deleted or throws an exception, when the homes cannot be deleted
+     * @return {@link CompletableFuture} when the homes were deleted or throws an exception, when the home cannot be deleted
      */
     CompletableFuture<Void> deleteAllHomeByOwnerId(UUID ownerId);
 

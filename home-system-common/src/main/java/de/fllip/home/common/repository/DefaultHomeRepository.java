@@ -50,10 +50,15 @@ public class DefaultHomeRepository implements HomeRepository {
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if (!resultSet.next()) {
-                    throw new IllegalStateException();
+                    resultSet.close();
+                    throw new IllegalStateException("No home found for " + ownerId);
                 }
 
-                return this.getHomeByResultSet(resultSet);
+                Home home = this.getHomeByResultSet(resultSet);
+
+                resultSet.close();
+
+                return home;
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -73,6 +78,8 @@ public class DefaultHomeRepository implements HomeRepository {
                 while (resultSet.next()) {
                     homes.add(this.getHomeByResultSet(resultSet));
                 }
+
+                resultSet.close();
 
                 return homes;
             } catch (SQLException e) {
@@ -115,7 +122,7 @@ public class DefaultHomeRepository implements HomeRepository {
                 int updated = preparedStatement.executeUpdate();
 
                 if (updated == 0) {
-                    throw new RuntimeException();
+                    throw new IllegalStateException("Home does not exists");
                 }
             }  catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -127,7 +134,7 @@ public class DefaultHomeRepository implements HomeRepository {
     public CompletableFuture<Void> deleteAllHomeByOwnerId(UUID ownerId) {
         return CompletableFuture.runAsync(() -> {
             try (Connection connection = this.hikariDataSource.getConnection();
-                 PreparedStatement preparedStatement = connection.prepareStatement(HomeDatabaseQueries.DELETE_HOMES_OWNER_ID_QUERY)) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(HomeDatabaseQueries.DELETE_HOMES_BY_OWNER_ID_QUERY)) {
                 preparedStatement.setString(1, ownerId.toString());
 
                 preparedStatement.execute();

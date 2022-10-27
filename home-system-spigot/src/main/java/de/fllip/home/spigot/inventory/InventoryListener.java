@@ -56,7 +56,8 @@ public class InventoryListener implements Listener {
             return;
         }
 
-        switch (Objects.requireNonNull(dataContainer.get(InventoryIdentifiers.ITEM_IDENTIFIER_KEY, PersistentDataType.STRING))) {
+        String itemIdentifier = Objects.requireNonNull(dataContainer.get(InventoryIdentifiers.ITEM_IDENTIFIER_KEY, PersistentDataType.STRING));
+        switch (itemIdentifier) {
             case InventoryIdentifiers.HOME_ITEM_IDENTIFIER -> this.handleHomeItemClick(player, dataContainer);
             case InventoryIdentifiers.DELETE_ITEM_IDENTIFIER -> this.handleDeleteHomesItemClick(player);
         }
@@ -64,7 +65,6 @@ public class InventoryListener implements Listener {
 
     private void handleHomeItemClick(Player player, PersistentDataContainer dataContainer) {
         player.closeInventory();
-
         String homeName = dataContainer.get(InventoryIdentifiers.HOME_IDENTIFIER_KEY, PersistentDataType.STRING);
         player.performCommand("home " + homeName);
     }
@@ -76,7 +76,7 @@ public class InventoryListener implements Listener {
     }
 
     private boolean checkInventoryName(InventoryView inventoryView) {
-        if (!((inventoryView.title()) instanceof TextComponent component)) {
+        if (!(inventoryView.title() instanceof TextComponent component)) {
             return false;
         }
 

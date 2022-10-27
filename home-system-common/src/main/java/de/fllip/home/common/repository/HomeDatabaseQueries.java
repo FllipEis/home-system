@@ -34,6 +34,6 @@ public class HomeDatabaseQueries {
 
     public static final String DELETE_HOME_BY_NAME_AND_OWNER_ID_QUERY = "delete from homes where `name`=? and `ownerId`=?;";
 
-    public static final String DELETE_HOMES_OWNER_ID_QUERY = "delete from homes where `ownerId`=?;";
+    public static final String DELETE_HOMES_BY_OWNER_ID_QUERY = "delete from homes where `ownerId`=?;";
 
 }

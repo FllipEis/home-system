@@ -20,21 +20,21 @@ public class ConfigLoader {
             .disableHtmlEscaping()
             .create();
 
-    public ConfigLoader() {
+    private ConfigLoader() {
         throw new IllegalStateException("ConfigLoader cannot be initialized");
     }
 
-    public static Config load(Path file) {
-        if (!Files.exists(file)) {
-            return saveNewFile(file);
+    public static Config load(Path path) {
+        if (Files.notExists(path)) {
+            return saveNewFile(path);
         }
 
-        return loadExistingConfig(file);
+        return loadExistingConfig(path);
     }
 
-    private static Config saveNewFile(Path file) {
+    private static Config saveNewFile(Path path) {
         try {
-            Files.createDirectories(file.getParent());
+            Files.createDirectories(path.getParent());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -44,10 +44,11 @@ public class ConfigLoader {
                 new MessageConfig()
         );
 
-        try (BufferedWriter writer = Files.newBufferedWriter(file)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(path)) {
             GSON.toJson(
                     config,
-                    writer);
+                    writer
+            );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -55,8 +56,8 @@ public class ConfigLoader {
         return config;
     }
 
-    private static Config loadExistingConfig(Path file) {
-        try (BufferedReader reader = Files.newBufferedReader(file)) {
+    private static Config loadExistingConfig(Path path) {
+        try (BufferedReader reader = Files.newBufferedReader(path)) {
             return GSON.fromJson(reader, Config.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
