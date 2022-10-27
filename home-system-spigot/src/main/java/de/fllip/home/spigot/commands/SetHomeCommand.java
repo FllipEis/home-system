@@ -3,6 +3,7 @@ package de.fllip.home.spigot.commands;
 import de.fllip.home.api.Home;
 import de.fllip.home.api.HomeAPI;
 import de.fllip.home.common.config.MessageConfig;
+import de.fllip.home.spigot.MiniMessages;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -42,10 +43,10 @@ public class SetHomeCommand extends PlayerCommandExecutor {
 
             this.homeAPI.getHomeRepository().saveHome(home)
                     .thenAccept(unused -> {
-                        player.sendMessage(this.messageConfig.createdHomeSuccessfullyMessage());
+                        player.sendMessage(MiniMessages.of(this.messageConfig.createdHomeSuccessfullyMessage()));
                     })
                     .exceptionally(throwable -> {
-                        player.sendMessage(this.messageConfig.homeAlreadyExistsMessage());
+                        player.sendMessage(MiniMessages.of(this.messageConfig.homeAlreadyExistsMessage()));
                         return null;
                     });
         });
