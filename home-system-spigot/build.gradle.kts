@@ -4,6 +4,8 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT")
-    compileOnly(project(":home-system-api"))
-    shadow(project(":home-system-common"))
+    implementation(project(":home-system-api"))
+    implementation(project(":home-system-common"))
+    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("mysql:mysql-connector-java:8.0.30")
 }
