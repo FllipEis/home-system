@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  */
 public class ItemBuilder {
 
-    private final static NamespacedKey ITEM_IDENTIFIER_KEY = NamespacedKey.minecraft("item-identifier");
+    private static final NamespacedKey ITEM_IDENTIFIER_KEY = NamespacedKey.minecraft("item-identifier");
 
     private final ItemStack itemStack;
 
