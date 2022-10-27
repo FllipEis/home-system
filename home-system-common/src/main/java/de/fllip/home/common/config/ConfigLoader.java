@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,16 +23,20 @@ public class ConfigLoader {
         throw new IllegalStateException("ConfigLoader cannot be initialized");
     }
 
-    public static Config load(File file) {
-        if (!file.exists()) {
+    public static Config load(Path file) {
+        if (!Files.exists(file)) {
             return saveNewFile(file);
         }
 
         return loadExistingConfig(file);
     }
 
-    private static Config saveNewFile(File file) {
-        file.getParentFile().mkdirs();
+    private static Config saveNewFile(Path file) {
+        try {
+            Files.createDirectories(file.getParent());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Config config = new Config(
                 new DatabaseConfig(),
@@ -48,8 +54,8 @@ public class ConfigLoader {
         return config;
     }
 
-    private static Config loadExistingConfig(File file) {
-        try (FileReader reader = new FileReader(file)) {
+    private static Config loadExistingConfig(Path file) {
+        try (BufferedReader reader = Files.newBufferedReader(file)) {
             return GSON.fromJson(reader, Config.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
