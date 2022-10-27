@@ -9,6 +9,8 @@ import de.fllip.home.common.config.MessageConfig;
 import de.fllip.home.common.database.DataSourceFactory;
 import de.fllip.home.common.repository.DefaultHomeRepository;
 import de.fllip.home.spigot.commands.*;
+import de.fllip.home.spigot.inventory.HomeListInventory;
+import de.fllip.home.spigot.inventory.InventoryListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +35,8 @@ public class HomePlugin extends JavaPlugin {
 
     private final HomeAPI homeAPI = new DefaultHomeAPI(this.homeRepository);
 
+    private final HomeListInventory homeListInventory = new HomeListInventory(this.homeAPI, this.config.messageConfig());
+
     @Override
     public void onEnable() {
         Bukkit.getServicesManager().register(HomeAPI.class, this.homeAPI, this, ServicePriority.Normal);
@@ -43,16 +47,24 @@ public class HomePlugin extends JavaPlugin {
                 });
 
         this.initializeCommands();
+        this.initializeListeners();
     }
 
     private void initializeCommands() {
         CommandInitializer commandInitializer = new CommandInitializer(this);
         MessageConfig messageConfig = this.config.messageConfig();
 
-        commandInitializer.initializeCommand("homes", new HomesCommand(this.homeAPI, messageConfig));
+        commandInitializer.initializeCommand("homes", new HomesCommand(this.homeListInventory, messageConfig));
         commandInitializer.initializeCommand("home", new HomeCommand(this.homeAPI, messageConfig));
         commandInitializer.initializeCommand("sethome", new SetHomeCommand(this.homeAPI, messageConfig));
         commandInitializer.initializeCommand("delhome", new DeleteHomeCommand(this.homeAPI, messageConfig));
+    }
+
+    private void initializeListeners() {
+        Bukkit.getPluginManager().registerEvents(
+                new InventoryListener(this.homeAPI, this.config.messageConfig()),
+                this
+        );
     }
 
 }
