@@ -36,5 +36,13 @@ allprojects {
 
 subprojects {
     dependencies {
+        implementation("com.google.code.gson:gson:2.10")
+    }
+
+    tasks {
+        named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+            //Relocate because you need gson version 2.10 to serialize records
+            relocate("com.google.gson", "de.fllip.gson")
+        }
     }
 }
