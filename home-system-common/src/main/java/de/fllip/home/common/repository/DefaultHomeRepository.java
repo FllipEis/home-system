@@ -30,8 +30,9 @@ public class DefaultHomeRepository implements HomeRepository {
     @Override
     public CompletableFuture<Void> createTable() {
         return CompletableFuture.runAsync(() -> {
-            try (Connection connection = this.hikariDataSource.getConnection()) {
-                connection.prepareStatement(HomeDatabaseQueries.CREATE_TABLE_QUERY).execute();
+            try (Connection connection = this.hikariDataSource.getConnection();
+                PreparedStatement statement = connection.prepareStatement(HomeDatabaseQueries.CREATE_TABLE_QUERY)) {
+                statement.execute();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -41,8 +42,8 @@ public class DefaultHomeRepository implements HomeRepository {
     @Override
     public CompletableFuture<Home> findHomeByHomeNameAndOwnerId(String homeName, UUID ownerId) {
         return CompletableFuture.supplyAsync(() -> {
-            try (Connection connection = this.hikariDataSource.getConnection()) {
-                PreparedStatement preparedStatement = connection.prepareStatement(HomeDatabaseQueries.FIND_HOME_BY_NAME_AND_OWNER_ID_QUERY);
+            try (Connection connection = this.hikariDataSource.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(HomeDatabaseQueries.FIND_HOME_BY_NAME_AND_OWNER_ID_QUERY)) {
                 preparedStatement.setString(1, homeName);
                 preparedStatement.setString(2, ownerId.toString());
 

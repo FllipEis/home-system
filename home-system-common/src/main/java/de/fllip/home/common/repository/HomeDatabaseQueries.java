@@ -9,7 +9,7 @@ package de.fllip.home.common.repository;
 public class HomeDatabaseQueries {
 
     public static final String CREATE_TABLE_QUERY = """
-                create table homes (
+                create table if not exists homes (
                     `name` varchar(30) not null,
                     `ownerId` char(36) not null,
                     `worldId` char(36) not null,
