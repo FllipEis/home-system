@@ -43,7 +43,7 @@ public class ConfigLoader {
                 new MessageConfig()
         );
 
-        try (FileWriter writer = new FileWriter(file)) {
+        try (BufferedWriter writer = Files.newBufferedWriter(file)) {
             GSON.toJson(
                     config,
                     writer);
