@@ -1,7 +1,7 @@
 package de.fllip.home.spigot.inventory;
 
+import de.fllip.home.spigot.MiniMessages;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -40,7 +40,7 @@ public class ItemBuilder {
     }
 
     public ItemBuilder withDisplayName(String displayName) {
-        return this.withDisplayName(MiniMessage.miniMessage().deserialize(displayName));
+        return this.withDisplayName(MiniMessages.of(displayName));
     }
 
     public ItemBuilder withDisplayName(Component displayName) {
@@ -51,7 +51,7 @@ public class ItemBuilder {
     public ItemBuilder withMiniMessageLoreLines(List<String> loreLines) {
         return this.withLoreLines(
                 loreLines.stream()
-                        .map(lore -> MiniMessage.miniMessage().deserialize(lore))
+                        .map(MiniMessages::of)
                         .collect(Collectors.toList())
         );
     }
