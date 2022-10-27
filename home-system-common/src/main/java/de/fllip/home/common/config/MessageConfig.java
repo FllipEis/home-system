@@ -21,6 +21,7 @@ public record MessageConfig(
         String homeNotFoundMessage,
         String createdHomeSuccessfullyMessage,
         String deletedHomeSuccessfullyMessage,
+        String deletedAllHomesSuccessfullyMessage,
         String homeAlreadyExistsMessage
 ) {
 
@@ -40,7 +41,8 @@ public record MessageConfig(
                 "<red>Ein Home mit diesem Namen existiert nicht!</red>",
                 "<green>Du hast erfolgreich ein neues Home erstellt</green>",
                 "<green>Du hast dein Home erfolgreich gelöscht</green>",
-                "<red>Du hast erfolgreich ein neues Home erstellt!</red>"
+                "<green>Du hast alle deine Homes erfolgreich gelöscht</green>",
+                "<red>Du hast bereits ein Home mit diesen Namen!</red>"
         );
     }
 
