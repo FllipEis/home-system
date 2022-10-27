@@ -1,5 +1,9 @@
 package de.fllip.home.common.config;
 
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Philipp.Eistrach
@@ -8,19 +12,35 @@ package de.fllip.home.common.config;
  */
 public record MessageConfig(
         String homeInventoryTitle,
-        String homeItemDescription,
+        List<String> homeItemDescription,
         String deleteHomeItemName,
         String noPlayerWarningMessage,
-        String noNameProvidedMessage
+        String noNameProvidedMessage,
+        String deleteAllHomesItemName,
+        String teleportFailedMessage,
+        String homeNotFoundMessage,
+        String createdHomeSuccessfullyMessage,
+        String deletedHomeSuccessfullyMessage,
+        String homeAlreadyExistsMessage
 ) {
 
     public MessageConfig() {
         this(
                 "<green>Deine Homes</green>",
-                "<gray>Klicke, um dich zum Home zu teleportieren</gray> <newline> <newline> <gray>Server: <yellow><server></yellow>",
+                Lists.newArrayList(
+                        "<gray>Klicke, um dich zum Home zu teleportieren</gray>",
+                        "",
+                        "<gray>Server: <yellow><server></yellow>"
+                ),
                 "<red>Alle Homes löschen</red>",
                 "<red>Du musst ein Spieler sein!</red>",
-                "<red>Bitte gib einen Namen an!</red>"
+                "<red>Bitte gib einen Namen an!</red>",
+                "<red>Alle Homes löschen</red>",
+                "<red>Du konntest nicht teleportiert werden!</red>",
+                "<red>Ein Home mit diesem Namen existiert nicht!</red>",
+                "<green>Du hast erfolgreich ein neues Home erstellt</green>",
+                "<green>Du hast dein Home erfolgreich gelöscht</green>",
+                "<red>Du hast erfolgreich ein neues Home erstellt!</red>"
         );
     }
 

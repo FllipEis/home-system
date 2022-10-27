@@ -3,8 +3,6 @@ package de.fllip.home.spigot.commands;
 import de.fllip.home.api.Home;
 import de.fllip.home.api.HomeAPI;
 import de.fllip.home.common.config.MessageConfig;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -20,9 +18,12 @@ public class SetHomeCommand extends PlayerCommandExecutor {
 
     private final HomeAPI homeAPI;
 
+    private final MessageConfig messageConfig;
+
     public SetHomeCommand(HomeAPI homeAPI, MessageConfig messageConfig) {
         super(messageConfig);
         this.homeAPI = homeAPI;
+        this.messageConfig = messageConfig;
     }
 
     @Override
@@ -41,10 +42,10 @@ public class SetHomeCommand extends PlayerCommandExecutor {
 
             this.homeAPI.getHomeRepository().saveHome(home)
                     .thenAccept(unused -> {
-                        player.sendMessage(Component.text("Du hast erfolgreich ein neues Home erstellt!", NamedTextColor.GREEN));
+                        player.sendMessage(this.messageConfig.createdHomeSuccessfullyMessage());
                     })
                     .exceptionally(throwable -> {
-                        player.sendMessage(Component.text("Ein Home mit diesem Namen existiert nicht!", NamedTextColor.RED));
+                        player.sendMessage(this.messageConfig.homeAlreadyExistsMessage());
                         return null;
                     });
         });

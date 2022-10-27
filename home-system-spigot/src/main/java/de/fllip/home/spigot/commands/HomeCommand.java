@@ -2,8 +2,7 @@ package de.fllip.home.spigot.commands;
 
 import de.fllip.home.api.HomeAPI;
 import de.fllip.home.common.config.MessageConfig;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import de.fllip.home.spigot.MiniMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -21,9 +20,12 @@ public class HomeCommand extends PlayerCommandExecutor {
 
     private final HomeAPI homeAPI;
 
+    MessageConfig messageConfig;
+
     public HomeCommand(HomeAPI homeAPI, MessageConfig messageConfig) {
         super(messageConfig);
         this.homeAPI = homeAPI;
+        this.messageConfig = messageConfig;
     }
 
     @Override
@@ -34,15 +36,15 @@ public class HomeCommand extends PlayerCommandExecutor {
                         World world = Bukkit.getWorld(home.worldId());
 
                         if (world == null) {
-                            player.sendMessage(Component.text("Du konntest nicht teleportiert werden!", NamedTextColor.RED));
+                            player.sendMessage(MiniMessages.of(this.messageConfig.teleportFailedMessage()));
                             return;
                         }
 
                         Location location = new Location(world, home.x(), home.y(), home.z(), home.yaw(), home.pitch());
-                        player.teleport(location);
+                        player.teleportAsync(location);
                     })
                     .exceptionally(throwable -> {
-                        player.sendMessage(Component.text("Ein Home mit diesem Namen existiert nicht!", NamedTextColor.RED));
+                        player.sendMessage(MiniMessages.of(this.messageConfig.homeNotFoundMessage()));
                         return null;
                     });
         });

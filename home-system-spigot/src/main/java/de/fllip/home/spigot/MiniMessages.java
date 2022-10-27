@@ -1,6 +1,7 @@
 package de.fllip.home.spigot;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 /**
@@ -12,7 +13,9 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 public class MiniMessages {
 
     public static Component of(String message) {
-        return MiniMessage.miniMessage().deserialize(message);
+        return MiniMessage.miniMessage()
+                .deserialize(message)
+                .decoration(TextDecoration.ITALIC, false);
     }
 
 }

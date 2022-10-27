@@ -2,8 +2,7 @@ package de.fllip.home.spigot.commands;
 
 import de.fllip.home.api.HomeAPI;
 import de.fllip.home.common.config.MessageConfig;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import de.fllip.home.spigot.MiniMessages;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -18,9 +17,12 @@ public class DeleteHomeCommand extends PlayerCommandExecutor {
 
     private final HomeAPI homeAPI;
 
+    private final MessageConfig messageConfig;
+
     public DeleteHomeCommand(HomeAPI homeAPI, MessageConfig messageConfig) {
         super(messageConfig);
         this.homeAPI = homeAPI;
+        this.messageConfig = messageConfig;
     }
 
     @Override
@@ -28,10 +30,10 @@ public class DeleteHomeCommand extends PlayerCommandExecutor {
         this.getNameArgOrSendMessage(player, args).ifPresent(name -> {
             this.homeAPI.getHomeRepository().deleteHomeByNameAndOwnerId(name, player.getUniqueId())
                     .thenAccept(home -> {
-                        player.sendMessage(Component.text("Du hast dein Home erfolgreich gelöscht!", NamedTextColor.GREEN));
+                        player.sendMessage(MiniMessages.of(this.messageConfig.deletedHomeSuccessfullyMessage()));
                     })
                     .exceptionally(throwable -> {
-                        player.sendMessage(Component.text("Ein Home mit diesem Namen existiert nicht!", NamedTextColor.RED));
+                        player.sendMessage(MiniMessages.of(this.messageConfig.homeNotFoundMessage()));
                         return null;
                     });
         });

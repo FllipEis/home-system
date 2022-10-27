@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -18,8 +19,6 @@ import java.util.stream.Collectors;
  */
 public class ItemBuilder {
 
-    private static final NamespacedKey ITEM_IDENTIFIER_KEY = NamespacedKey.minecraft("item-identifier");
-
     private final ItemStack itemStack;
 
     public static ItemBuilder of(Material material) {
@@ -31,11 +30,14 @@ public class ItemBuilder {
     }
 
     public ItemBuilder withIdentifier(String identifier) {
-        return this.withIdentifier(ITEM_IDENTIFIER_KEY, identifier);
+        return this.withIdentifier(InventoryIdentifiers.ITEM_IDENTIFIER_KEY, identifier);
     }
 
     public ItemBuilder withIdentifier(NamespacedKey namespacedKey, String identifier) {
-        this.itemStack.getItemMeta().getPersistentDataContainer().set(namespacedKey, PersistentDataType.STRING, identifier);
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta.getPersistentDataContainer().set(namespacedKey, PersistentDataType.STRING, identifier);
+        this.itemStack.setItemMeta(itemMeta);
+
         return this;
     }
 
@@ -44,7 +46,10 @@ public class ItemBuilder {
     }
 
     public ItemBuilder withDisplayName(Component displayName) {
-        this.itemStack.getItemMeta().displayName(displayName);
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta.displayName(displayName);
+        this.itemStack.setItemMeta(itemMeta);
+
         return this;
     }
 
@@ -57,7 +62,10 @@ public class ItemBuilder {
     }
 
     public ItemBuilder withLoreLines(List<Component> loreLines) {
-        this.itemStack.getItemMeta().lore(loreLines);
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta.lore(loreLines);
+        this.itemStack.setItemMeta(itemMeta);
+
         return this;
     }
 
