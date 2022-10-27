@@ -112,7 +112,11 @@ public class DefaultHomeRepository implements HomeRepository {
                 preparedStatement.setString(1, homeName);
                 preparedStatement.setString(2, ownerId.toString());
 
-                preparedStatement.execute();
+                int updated = preparedStatement.executeUpdate();
+
+                if (updated == 0) {
+                    throw new RuntimeException();
+                }
             }  catch (SQLException e) {
                 throw new RuntimeException(e);
             }
