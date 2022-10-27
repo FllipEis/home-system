@@ -12,7 +12,8 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.util.logging.Level;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,7 +23,7 @@ import java.io.File;
  */
 public class HomePlugin extends JavaPlugin {
 
-    private final Config config = ConfigLoader.load(new File(this.getDataFolder(), "config.json"));
+    private final Config config = ConfigLoader.load(Path.of(this.getDataFolder().toString(), "config.json"));
 
     private final HikariDataSource dataSource = DataSourceFactory.createDataSource(config.databaseConfig());
 
@@ -33,6 +34,11 @@ public class HomePlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         Bukkit.getServicesManager().register(HomeAPI.class, this.homeAPI, this, ServicePriority.Normal);
+        this.homeRepository.createTable()
+                .exceptionally(throwable -> {
+                    this.getLogger().log(Level.WARNING, "Error while creating 'homes' table");
+                    return null;
+                });
     }
 
 }
