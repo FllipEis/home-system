@@ -17,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 public class DeleteHomeCommand extends PlayerCommandExecutor {
 
     private final HomeAPI homeAPI;
+
     public DeleteHomeCommand(HomeAPI homeAPI, MessageConfig messageConfig) {
         super(messageConfig);
         this.homeAPI = homeAPI;
