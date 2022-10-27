@@ -4,6 +4,7 @@ import de.fllip.home.api.Home;
 import de.fllip.home.api.HomeAPI;
 import de.fllip.home.common.config.MessageConfig;
 import de.fllip.home.spigot.MiniMessages;
+import de.fllip.home.spigot.PlayerProfiles;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -83,6 +84,7 @@ public class HomeListInventory {
         return ItemBuilder.of(Material.PLAYER_HEAD)
                 .withIdentifier(InventoryIdentifiers.DELETE_ITEM_IDENTIFIER)
                 .withDisplayName(MiniMessages.of(this.messageConfig.deleteAllHomesItemName()))
+                .withPlayerProfile(PlayerProfiles.RED_X_PROFILE)
                 .build();
     }
 

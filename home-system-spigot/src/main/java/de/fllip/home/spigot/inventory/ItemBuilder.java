@@ -1,11 +1,13 @@
 package de.fllip.home.spigot.inventory;
 
+import com.destroystokyo.paper.profile.PlayerProfile;
 import de.fllip.home.spigot.MiniMessages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
@@ -64,6 +66,20 @@ public class ItemBuilder {
     public ItemBuilder withLoreLines(List<Component> loreLines) {
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         itemMeta.lore(loreLines);
+        this.itemStack.setItemMeta(itemMeta);
+
+        return this;
+    }
+
+
+
+    public ItemBuilder withPlayerProfile(PlayerProfile playerProfile) {
+        if (this.itemStack.getType() != Material.PLAYER_HEAD) {
+            throw new IllegalStateException("Player profiles can only be set on Material.PLAYER_HEAD");
+        }
+
+        SkullMeta itemMeta = (SkullMeta) this.itemStack.getItemMeta();
+        itemMeta.setPlayerProfile(playerProfile);
         this.itemStack.setItemMeta(itemMeta);
 
         return this;
