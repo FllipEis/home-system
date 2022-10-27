@@ -47,12 +47,20 @@ public interface HomeRepository {
 
 
     /**
-     * Deletes a specific {@link Home} by a name
+     * Deletes a specific {@link Home} by a name and an owner id
      *
      * @param homeName the name of the home, that will be deleted
      * @param ownerId the id of the owner
      * @return CompletableFuture when the home was deleted or throws an exception, when the home cannot be deleted
      */
     CompletableFuture<Void> deleteHomeByNameAndOwnerId(String homeName, UUID ownerId);
+
+    /**
+     * Deletes all {@link Home}s by an owner id
+     *
+     * @param ownerId the id of the owner
+     * @return CompletableFuture when the homes were deleted or throws an exception, when the homes cannot be deleted
+     */
+    CompletableFuture<Void> deleteAllHomeByOwnerId(UUID ownerId);
 
 }

@@ -119,6 +119,20 @@ public class DefaultHomeRepository implements HomeRepository {
         });
     }
 
+    @Override
+    public CompletableFuture<Void> deleteAllHomeByOwnerId(UUID ownerId) {
+        return CompletableFuture.runAsync(() -> {
+            try (Connection connection = this.hikariDataSource.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(HomeDatabaseQueries.DELETE_HOMES_OWNER_ID_QUERY)) {
+                preparedStatement.setString(1, ownerId.toString());
+
+                preparedStatement.execute();
+            }  catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
     private Home getHomeByResultSet(ResultSet resultSet) throws SQLException {
         String homeName = resultSet.getString("name");
         String ownerIdString = resultSet.getString("ownerId");
