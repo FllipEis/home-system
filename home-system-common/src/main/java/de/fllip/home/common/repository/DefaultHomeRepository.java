@@ -131,7 +131,7 @@ public class DefaultHomeRepository implements HomeRepository {
     }
 
     @Override
-    public CompletableFuture<Void> deleteAllHomeByOwnerId(UUID ownerId) {
+    public CompletableFuture<Void> deleteAllHomesByOwnerId(UUID ownerId) {
         return CompletableFuture.runAsync(() -> {
             try (Connection connection = this.hikariDataSource.getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(HomeDatabaseQueries.DELETE_HOMES_BY_OWNER_ID_QUERY)) {

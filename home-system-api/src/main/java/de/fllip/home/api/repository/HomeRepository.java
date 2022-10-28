@@ -61,6 +61,6 @@ public interface HomeRepository {
      * @param ownerId the id of the owner
      * @return {@link CompletableFuture} when the homes were deleted or throws an exception, when the home cannot be deleted
      */
-    CompletableFuture<Void> deleteAllHomeByOwnerId(UUID ownerId);
+    CompletableFuture<Void> deleteAllHomesByOwnerId(UUID ownerId);
 
 }

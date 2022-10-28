@@ -71,7 +71,7 @@ public class InventoryListener implements Listener {
 
     private void handleDeleteHomesItemClick(Player player) {
         player.closeInventory();
-        this.homeAPI.getHomeRepository().deleteAllHomeByOwnerId(player.getUniqueId());
+        this.homeAPI.getHomeRepository().deleteAllHomesByOwnerId(player.getUniqueId());
         player.sendMessage(MiniMessages.of(this.messageConfig.deletedAllHomesSuccessfullyMessage()));
     }
 

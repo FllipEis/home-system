@@ -54,10 +54,12 @@ public class HomePlugin extends JavaPlugin {
         CommandInitializer commandInitializer = new CommandInitializer(this);
         MessageConfig messageConfig = this.config.messageConfig();
 
+        HomeNameTabCompleter homeNameTabCompleter = new HomeNameTabCompleter(this.homeAPI);
+
         commandInitializer.initializeCommand("homes", new HomesCommand(this.homeListInventory, messageConfig));
-        commandInitializer.initializeCommand("home", new HomeCommand(this.homeAPI, messageConfig));
+        commandInitializer.initializeCommand("home", new HomeCommand(this.homeAPI, messageConfig), homeNameTabCompleter);
         commandInitializer.initializeCommand("sethome", new SetHomeCommand(this.homeAPI, messageConfig));
-        commandInitializer.initializeCommand("delhome", new DeleteHomeCommand(this.homeAPI, messageConfig));
+        commandInitializer.initializeCommand("delhome", new DeleteHomeCommand(this.homeAPI, messageConfig), homeNameTabCompleter);
     }
 
     private void initializeListeners() {

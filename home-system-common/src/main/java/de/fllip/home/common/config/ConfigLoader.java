@@ -45,10 +45,7 @@ public class ConfigLoader {
         );
 
         try (BufferedWriter writer = Files.newBufferedWriter(path)) {
-            GSON.toJson(
-                    config,
-                    writer
-            );
+            GSON.toJson(config, writer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -11,7 +11,7 @@ import de.fllip.home.api.repository.HomeRepository;
 public interface HomeAPI {
 
     /**
-     * @return the repository of {@link Home}s
+     * @return the repository of {@link Home Homes}
      */
     HomeRepository getHomeRepository();
 
